@@ -147,29 +147,29 @@ public delegate void ErrorAction(string data);
 /// </summary>
 class RequestObject {
 
-    /// <summary>
-    /// 请求参数
-    /// </summary>
-    public string route; // 请求路由
-    public JsonData data; // 发送的数据
+	/// <summary>
+	/// 请求参数
+	/// </summary>
+	public string route; // 请求路由
+	public JsonData data; // 发送的数据
 
-    public SuccessAction onSuccess; // 成功回调
-    public ErrorAction onError; // 失败回调
-    public UnityAction onEnd; // 结束回调
+	public SuccessAction onSuccess; // 成功回调
+	public ErrorAction onError; // 失败回调
+	public UnityAction onEnd; // 结束回调
 
-    public bool showLoading; // 是否显示Loading遮罩
-    public string tipsText; // Loading遮罩提示文本
+	public bool showLoading; // 是否显示Loading遮罩
+	public string tipsText; // Loading遮罩提示文本
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public RequestObject(string route, JsonData data, 
-    	SuccessAction onSuccess = null, ErrorAction onError = null, UnityAction onEnd = null,
-        bool showLoading = true, string tipsText = "") {
-        this.route = route; this.data = data; 
-        this.onSuccess = onSuccess; this.onError = onError; this.onEnd = onEnd;
-        this.showLoading = showLoading; this.tipsText = tipsText;
-    }
+	/// <summary>
+	/// 构造函数
+	/// </summary>
+	public RequestObject(string route, JsonData data, 
+		SuccessAction onSuccess = null, ErrorAction onError = null, UnityAction onEnd = null,
+		bool showLoading = true, string tipsText = "") {
+		this.route = route; this.data = data; 
+		this.onSuccess = onSuccess; this.onError = onError; this.onEnd = onEnd;
+		this.showLoading = showLoading; this.tipsText = tipsText;
+	}
 }
 
 ```
@@ -279,33 +279,33 @@ public delegate void ErrorAction(JsonData data);
 /// </summary>
 public class RequestObject {
 
-    /// <summary>
-    /// 请求参数
-    /// </summary>
-    public string route; // 请求路由
-    public JsonData data; // 发送的数据
+	/// <summary>
+	/// 请求参数
+	/// </summary>
+	public string route; // 请求路由
+	public JsonData data; // 发送的数据
 
-    public SuccessAction onSuccess; // 成功回调
-    public ErrorAction onError; // 失败回调
-    public UnityAction onEnd; // 结束回调
+	public SuccessAction onSuccess; // 成功回调
+	public ErrorAction onError; // 失败回调
+	public UnityAction onEnd; // 结束回调
 
-    public bool showLoading; // 是否显示Loading遮罩
-    public string tipsText; // Loading遮罩提示文本
+	public bool showLoading; // 是否显示Loading遮罩
+	public string tipsText; // Loading遮罩提示文本
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    public RequestObject(string route, JsonData data, 
-    	SuccessAction onSuccess = null, ErrorAction onError = null, UnityAction onEnd = null,
-        bool showLoading = true, string tipsText = "") {
-        this.route = route; this.data = data; 
-        this.onSuccess = onSuccess; this.onError = onError; this.onEnd = onEnd;
-        this.showLoading = showLoading; this.tipsText = tipsText;
-    }
+	/// <summary>
+	/// 构造函数
+	/// </summary>
+	public RequestObject(string route, JsonData data, 
+		SuccessAction onSuccess = null, ErrorAction onError = null, UnityAction onEnd = null,
+		bool showLoading = true, string tipsText = "") {
+		this.route = route; this.data = data; 
+		this.onSuccess = onSuccess; this.onError = onError; this.onEnd = onEnd;
+		this.showLoading = showLoading; this.tipsText = tipsText;
+	}
 
-    /// <summary>
-    /// 发起请求
-    /// </summary>
+	/// <summary>
+	/// 发起请求
+	/// </summary>
 	public void request() {
 		onRequestStart(); 
 		NetworkSystem.request(route, data.ToJson(), 
@@ -502,8 +502,8 @@ public class HTTPService : MonoBehaviour {
 	/// <param name="url"></param>
 	/// <param name="_postData">json数据</param>
 	public void Post(string url, PostData data,
-	    UnityAction<string> onSuccess = null, UnityAction<string> onFail = null) {
-	    StartCoroutine(PostRequest(url, data, onSuccess, onFail));
+		UnityAction<string> onSuccess = null, UnityAction<string> onFail = null) {
+		StartCoroutine(PostRequest(url, data, onSuccess, onFail));
 	}
 
 	/// <summary>
@@ -513,78 +513,78 @@ public class HTTPService : MonoBehaviour {
 	/// <param name="_postData"></param>
 	/// <returns></returns>
 	private IEnumerator PostRequest(string url, PostData data,
-	    UnityAction<string> onSuccess = null, UnityAction<string> onFail = null) {
-	    var js = JsonUtility.ToJson(data);
-	    Debug.Log(js);
+		UnityAction<string> onSuccess = null, UnityAction<string> onFail = null) {
+		var js = JsonUtility.ToJson(data);
+		Debug.Log(js);
 
-	    UnityWebRequest webRequest = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
-	        //UnityWebRequest.Post(url, js);
-	    UploadHandler uploader = new UploadHandlerRaw(
-	        System.Text.Encoding.Default.GetBytes(js));
-	    webRequest.uploadHandler = uploader;
-	    webRequest.uploadHandler.contentType = "application/json";  //设置HTTP协议的请求头，默认的请求头HTTP服务器无法识别
-	    webRequest.certificateHandler = new WebRequestCert();
+		UnityWebRequest webRequest = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST);
+			//UnityWebRequest.Post(url, js);
+		UploadHandler uploader = new UploadHandlerRaw(
+			System.Text.Encoding.Default.GetBytes(js));
+		webRequest.uploadHandler = uploader;
+		webRequest.uploadHandler.contentType = "application/json";  //设置HTTP协议的请求头，默认的请求头HTTP服务器无法识别
+		webRequest.certificateHandler = new WebRequestCert();
 
-	    //这里需要创建新的对象用于存储请求并响应后返回的消息体，否则报空引用的错误
-	    DownloadHandler downloadHandler = new DownloadHandlerBuffer();
-	    webRequest.downloadHandler = downloadHandler;
+		//这里需要创建新的对象用于存储请求并响应后返回的消息体，否则报空引用的错误
+		DownloadHandler downloadHandler = new DownloadHandlerBuffer();
+		webRequest.downloadHandler = downloadHandler;
 
-	    // Request and wait for the desired page.
-	    yield return webRequest.SendWebRequest();
+		// Request and wait for the desired page.
+		yield return webRequest.SendWebRequest();
 
-	    if (webRequest.isNetworkError || webRequest.isHttpError) {
-	        onFail?.Invoke(webRequest.error);
-	    }
-	    else {
-	        onSuccess.Invoke(webRequest.downloadHandler.text);
-	    }
-	    Debug.Log("respone code:" + webRequest.responseCode);
+		if (webRequest.isNetworkError || webRequest.isHttpError) {
+			onFail?.Invoke(webRequest.error);
+		}
+		else {
+			onSuccess.Invoke(webRequest.downloadHandler.text);
+		}
+		Debug.Log("respone code:" + webRequest.responseCode);
 	}
 
 	/// <summary>
 	/// 原料数据显示
 	/// </summary>
 	public void loadShowMaterial(int dbID = 0, int labID = 0, 
-	    UnityAction<int, MaterialDatabase> onSuccess = null,
-	    UnityAction<int> onFail = null) {
-	    var postData = new ShowMaterialPostData();
-	    postData.material_database_id = dbID;
-	    postData.lab_machine_id = labID;
+		UnityAction<int, MaterialDatabase> onSuccess = null,
+		UnityAction<int> onFail = null) {
+		var postData = new ShowMaterialPostData();
+		postData.material_database_id = dbID;
+		postData.lab_machine_id = labID;
 
-	    Post(webURL + showMaterialRoote, postData, (text) => {
-	        Debug.Log("material");
-	        Debug.Log(text);
+		Post(webURL + showMaterialRoote, postData, (text) => {
+			Debug.Log("material");
+			Debug.Log(text);
 
-	        var js = JsonMapper.ToObject(text);
-	        var newJs = new JsonData();
-	        newJs.SetJsonType(JsonType.Array);
-	        foreach (var val in js.Keys)
-	            newJs.Add(js[val]);
+			var js = JsonMapper.ToObject(text);
+			var newJs = new JsonData();
+			newJs.SetJsonType(JsonType.Array);
+			foreach (var val in js.Keys)
+				newJs.Add(js[val]);
 
-	        var ms = DataLoader.load<MaterialDatabase.LabMaterial[]>(newJs);
-	        var m = new MaterialDatabase();
-	        m.labMaterials = ms;
-	        onSuccess?.Invoke(labID, m);
-	        Debug.Log(m.toJson().ToJson());
-	    }, text => { Debug.Log(text); onFail?.Invoke(labID); });
+			var ms = DataLoader.load<MaterialDatabase.LabMaterial[]>(newJs);
+			var m = new MaterialDatabase();
+			m.labMaterials = ms;
+			onSuccess?.Invoke(labID, m);
+			Debug.Log(m.toJson().ToJson());
+		}, text => { Debug.Log(text); onFail?.Invoke(labID); });
 	}
 
 	/// <summary>
 	/// 载入实验室参数
 	/// </summary>
 	public void loadLabVar(int dbID = 0, UnityAction<Data.Lab> onSuccess = null,
-	    UnityAction onFail = null) {
-	    var postData = new LabVarPostData();
-	    postData.lab_var_id = dbID;
-	    postData.chapter_id = dataContainer.chapterID;
+		UnityAction onFail = null) {
+		var postData = new LabVarPostData();
+		postData.lab_var_id = dbID;
+		postData.chapter_id = dataContainer.chapterID;
 
-	    Post(webURL + labVarRoote, postData, (text) => {
-	        Debug.Log("labVar");
-	        Debug.Log(text);
-	        var m = JsonUtility.FromJson<Lab>(text);
-	        onSuccess?.Invoke(m);
-	        Debug.Log(JsonUtility.ToJson(m, true));
-	    }, text => { Debug.Log(text); onFail?.Invoke(); });
+		Post(webURL + labVarRoote, postData, (text) => {
+			Debug.Log("labVar");
+			Debug.Log(text);
+			var m = JsonUtility.FromJson<Lab>(text);
+			onSuccess?.Invoke(m);
+			Debug.Log(JsonUtility.ToJson(m, true));
+		}, text => { Debug.Log(text); onFail?.Invoke(); });
 	}
 
 	/// <summary>
@@ -595,20 +595,20 @@ public class HTTPService : MonoBehaviour {
 	/// <param name="lab_bottle_id">容器位ID</param>
 	/// <param name="material_id">原料ID</param>
 	public void confirmMaterial(int lab_machine_id, int lab_row_id, int lab_bottle_id, 
-	    int material_id, UnityAction<OperationScoreMessage> onSuccess = null, UnityAction onFail = null) {
-	    var postData = new EvaluateShowPostData();
-	    postData.material_database_id = dataContainer.materialDatabaseID;
-	    postData.lab_machine_id = lab_machine_id;
-	    postData.lab_row_id = lab_row_id;
-	    postData.lab_bottle_id = lab_bottle_id;
-	    postData.material_id = material_id;
-	    postData.chapter_id = dataContainer.chapterID;
+		int material_id, UnityAction<OperationScoreMessage> onSuccess = null, UnityAction onFail = null) {
+		var postData = new EvaluateShowPostData();
+		postData.material_database_id = dataContainer.materialDatabaseID;
+		postData.lab_machine_id = lab_machine_id;
+		postData.lab_row_id = lab_row_id;
+		postData.lab_bottle_id = lab_bottle_id;
+		postData.material_id = material_id;
+		postData.chapter_id = dataContainer.chapterID;
 
-	    Post(webURL + scoreShowRoote, postData, (text) => {
-	        Debug.Log(text);
-	        var m = JsonUtility.FromJson<OperationScoreMessage>(text);
-	        onSuccess?.Invoke(m);
-	    }, text => { Debug.Log(text); onSuccess?.Invoke(new OperationScoreMessage()); });
+		Post(webURL + scoreShowRoote, postData, (text) => {
+			Debug.Log(text);
+			var m = JsonUtility.FromJson<OperationScoreMessage>(text);
+			onSuccess?.Invoke(m);
+		}, text => { Debug.Log(text); onSuccess?.Invoke(new OperationScoreMessage()); });
 	}
 
 }
