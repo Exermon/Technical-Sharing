@@ -43,8 +43,9 @@ public static class NetworkSystem {
 
 一般来说，不可能直接使用这个函数去发起请求，因为传入的`data`是一个JSON字符串，手撸是不可能手撸的，所以要封装：
 
-首先是要有一个对象保存这个JSON数据，这里推荐使用`LitJson`插件的`JsonData`类；
-其次是需要将这个函数封装，把传入和传出的数据类型都改为`JsonData`
+1. 首先，要有一个对象保存这个JSON数据，这里推荐使用`LitJson`插件的`JsonData`类；
+
+2. 其次，需要将这个函数封装，把传入和传出的数据类型都改为`JsonData`。
 
 那么封装之后的函数如下（这里就省略函数注释了）：
 
@@ -131,9 +132,7 @@ public static class NetworkSystem {
 
 由于请求的过程是异步的，在发起请求之后到响应回来之前这段时间往往需要显示一个Loading的遮罩，这个遮罩上还会显示一段提示文本，同时还会有很多其他配置数据。
 
-我们可以定义一个请求对象（`RequestObject`）类来封装这些数据。
-
-这里直接给出我们的`NetworkSystem`的部分代码（有修改）：
+我们可以定义一个请求对象（`RequestObject`）类来封装这些数据：
 
 ``` C#
 
