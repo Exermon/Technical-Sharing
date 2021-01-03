@@ -86,8 +86,6 @@ public static class NetworkSystem {
 	public static void request(string route, string data, UnityAction<string> onSuccess, UnityAction<string> onError);
 	public static void request(string route, JsonData data, UnityAction<JsonData> onSuccess, UnityAction<JsonData> onError) {
 		var _data = data.ToJson(); // 这个函数可以将一个JsonData转化为一个JSON字符串
-		var _onSuccess = processRequestSuccess(onSuccess);
-		var _onError = processRequestError(onError);
 
 		// 这里看上去代码会很长，之后会进一步优化
 		var _onSuccess = text => onRequestSuccess(text, onSuccess);
