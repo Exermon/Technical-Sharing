@@ -102,6 +102,7 @@ public static class NetworkSystem {
 	static void onRequestStart() { 
 		// 自定义实现
 	}
+	
 	/// <summary>
 	/// 请求成功回调
 	/// </summary>
@@ -266,7 +267,7 @@ var _onSuccess = text => onRequestSuccess(text, requestObject);
 var _onError = text => onRequestError(text, requestObject);
 ```
 
-2. `request`，`onRequestStart`，`onRequestSuccess`，`onRequestError`，`onRequestEnd`这几个函数存在一个`RequestObejct`类型的参数，函数的内容都是对`RequestObejct`内的数据进行操作，这样是不是很像上个年代的面向过程的编程思想呢？
+2. `request`，`onRequestStart`，`onRequestSuccess`，`onRequestError`，`onRequestEnd`这几个函数存在一个`RequestObejct`类型的参数，函数的内容都是对`RequestObejct`内的数据进行操作，这样是不是很像上个年代的面向过程的编程思想呢？时代变了，现在需要面向对象
 
 针对这两点，我们只需要将上面几个函数移动到`RequestObejct`内部即可。新的代码如下：
 
