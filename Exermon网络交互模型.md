@@ -97,6 +97,12 @@ public static class NetworkSystem {
 	}
 
 	/// <summary>
+	/// 请求开始回调
+	/// </summary>
+	static void onRequestStart() { 
+		// 自定义实现
+	}
+	/// <summary>
 	/// 请求成功回调
 	/// </summary>
 	/// <param name="text">返回的JSON字符串</param>
