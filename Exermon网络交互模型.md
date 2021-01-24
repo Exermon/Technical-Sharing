@@ -11,7 +11,7 @@
 
 序列化和反序列化的工具有很多，但是实践发现这些工具不太好用
 
-这里推荐使用Exermon开发的数据模型（`BaseData`+`LitJson`）
+这里推荐使用Exermon数据模型（`BaseData`+`LitJson`）
 
 关于这个数据模型如果你们有兴趣下次再展开讲，这里只是简单过一下
 
@@ -86,8 +86,6 @@ public static class NetworkSystem {
 	public static void request(string route, string data, UnityAction<string> onSuccess, UnityAction<string> onError);
 	public static void request(string route, JsonData data, UnityAction<JsonData> onSuccess, UnityAction<JsonData> onError) {
 		var _data = data.ToJson(); // 这个函数可以将一个JsonData转化为一个JSON字符串
-		var _onSuccess = processRequestSuccess(onSuccess);
-		var _onError = processRequestError(onError);
 
 		// 这里看上去代码会很长，之后会进一步优化
 		var _onSuccess = text => onRequestSuccess(text, onSuccess);
@@ -98,6 +96,13 @@ public static class NetworkSystem {
 		request(route, _data, _onSuccess, _onError);
 	}
 
+	/// <summary>
+	/// 请求开始回调
+	/// </summary>
+	static void onRequestStart() { 
+		// 自定义实现
+	}
+	
 	/// <summary>
 	/// 请求成功回调
 	/// </summary>
@@ -262,7 +267,7 @@ var _onSuccess = text => onRequestSuccess(text, requestObject);
 var _onError = text => onRequestError(text, requestObject);
 ```
 
-2. `request`，`onRequestStart`，`onRequestSuccess`，`onRequestError`，`onRequestEnd`这几个函数存在一个`RequestObejct`类型的参数，函数的内容都是对`RequestObejct`内的数据进行操作，这样是不是很像上个年代的面向过程的编程思想呢？
+2. `request`，`onRequestStart`，`onRequestSuccess`，`onRequestError`，`onRequestEnd`这几个函数存在一个`RequestObejct`类型的参数，函数的内容都是对`RequestObejct`内的数据进行操作，这样是不是很像上个年代的面向过程的编程思想呢？时代变了，现在需要面向对象
 
 针对这两点，我们只需要将上面几个函数移动到`RequestObejct`内部即可。新的代码如下：
 
