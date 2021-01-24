@@ -35,7 +35,7 @@
 - 对于上面两点，如果有的注册对象没有声明对应的函数，则跳过
 - `CallbackManager`还可以单独为某个回调类型注册对应的回调函数
 
-用伪代码来表示：
+用代码来表示：
 
 ``` CSharp
 // 类和枚举定义
@@ -178,6 +178,22 @@ class ExerEvent<T0, T1, T2> : UnityEvent<T0, T1, T2> { }
 class ExerEvent<T0, T1, T2, T3> : UnityEvent<T0, T1, T2, T3> { }
 
 /// <summary>
+/// 获取委托类型
+/// </summary>
+/// <param name="types"></param>
+/// <returns></returns>
+static Type getActionType(Type[] types) {
+	switch (types.Length) {
+		case 0: return typeof(UnityAction);
+		case 1: return typeof(UnityAction<>).MakeGenericType(types);
+		case 2: return typeof(UnityAction<,>).MakeGenericType(types);
+		case 3: return typeof(UnityAction<,,>).MakeGenericType(types);
+		case 4: return typeof(UnityAction<,,,>).MakeGenericType(types);
+		default: return null;
+	}
+}
+
+/// <summary>
 /// 获取事件类型
 /// </summary>
 /// <param name="types"></param>
@@ -277,9 +293,6 @@ public class CallbackItem {
 		if (params_.Length > MaxParamCount) return null;
 
 		var types = CallbackManager.getTypes(params_);
-		return getAction(obj, method, types);
-	}
-	Delegate getAction(object obj, MethodInfo method, Type[] types) {
 		var aType = getActionType(types);
 
 		return method.CreateDelegate(aType, obj); // 创建 Delegate
